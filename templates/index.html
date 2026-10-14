@@ -1,0 +1,676 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.ORG_NAME }} — {{ config.ORG_TAGLINE }}{% endblock %}
+
+{% block content %}
+<!-- Seção Hero (Apresentação Principal) -->
+<section class="hero-section">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span>Extensão Universitária em Ação Social</span>
+      </div>
+      <h1 class="hero-title">{{ config.ORG_TAGLINE }}</h1>
+      <p class="hero-subtitle">{{ config.ORG_SUBTITLE }}</p>
+      <div class="hero-actions">
+        <a href="#formulario-inscricao" class="btn btn-primary btn-lg">Quero me voluntariar</a>
+        <a href="#como-ajudar" class="btn btn-secondary btn-lg">Conhecer áreas</a>
+      </div>
+    </div>
+
+    <!-- Ilustração SVG Original de Colaboração e Voluntariado -->
+    <div class="hero-visual" aria-hidden="true">
+      <svg class="hero-illustration" viewBox="0 0 520 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#E8F5F1" />
+            <stop offset="100%" stop-color="#D0EBE2" />
+          </linearGradient>
+          <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#167D65" />
+            <stop offset="100%" stop-color="#123D32" />
+          </linearGradient>
+          <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F59E0B" />
+            <stop offset="100%" stop-color="#D97706" />
+          </linearGradient>
+          <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#123D32" flood-opacity="0.12" />
+          </filter>
+        </defs>
+
+        <!-- Fundo decorativo orgânico -->
+        <circle cx="260" cy="210" r="180" fill="url(#bgGrad)" opacity="0.8" />
+        <path d="M120 180 C80 120, 160 60, 220 100 C280 140, 240 220, 160 200 Z" fill="#C2E5D9" opacity="0.6" />
+        <path d="M340 280 C400 240, 440 320, 380 360 C320 400, 280 340, 340 280 Z" fill="#E8F5F1" opacity="0.7" />
+
+        <!-- Base / Solo comunitário -->
+        <rect x="70" y="340" width="380" height="20" rx="10" fill="#167D65" opacity="0.15" />
+
+        <!-- Cartão central flutuante: Impacto Compartilhado -->
+        <g filter="url(#softShadow)">
+          <rect x="150" y="110" width="220" height="180" rx="16" fill="#FFFFFF" />
+          <circle cx="260" cy="160" r="34" fill="url(#bgGrad)" />
+          <!-- Ícone de Coração nas Mãos -->
+          <path d="M260 148 C252 138 238 144 246 156 L260 170 L274 156 C282 144 268 138 260 148 Z" fill="#167D65" />
+          <!-- Barra de progresso visual no cartão -->
+          <rect x="180" y="215" width="160" height="10" rx="5" fill="#E1E8E5" />
+          <rect x="180" y="215" width="115" height="10" rx="5" fill="url(#primaryGrad)" />
+          <text x="260" y="248" font-family="system-ui, sans-serif" font-size="12" font-weight="600" fill="#24352F" text-anchor="middle">Ações em Comunidade</text>
+          <text x="260" y="268" font-family="system-ui, sans-serif" font-size="11" fill="#5A6E66" text-anchor="middle">Conexão Solidária</text>
+        </g>
+
+        <!-- Personagem à esquerda (Entregando caixa / colaborando) -->
+        <g>
+          <!-- Cabeça -->
+          <circle cx="115" cy="190" r="22" fill="#F8C291" />
+          <!-- Cabelo -->
+          <path d="M96 186 C96 168 134 168 134 186 C124 176 106 176 96 186 Z" fill="#24352F" />
+          <!-- Corpo -->
+          <path d="M92 230 C92 214 138 214 138 230 L145 320 L85 320 Z" fill="url(#primaryGrad)" />
+          <!-- Braços segurando suporte -->
+          <path d="M125 240 L165 248" stroke="#F8C291" stroke-width="10" stroke-linecap="round" />
+          <!-- Caixa de doação -->
+          <rect x="155" y="235" width="45" height="38" rx="6" fill="url(#accentGrad)" />
+          <path d="M155 248 L200 248" stroke="#FFFFFF" stroke-width="2" />
+        </g>
+
+        <!-- Personagem à direita (Acolhendo / interagindo) -->
+        <g>
+          <!-- Cabeça -->
+          <circle cx="405" cy="190" r="22" fill="#FAD390" />
+          <!-- Cabelo -->
+          <path d="M386 186 C386 168 424 168 424 186 C414 176 396 176 386 186 Z" fill="#123D32" />
+          <!-- Corpo -->
+          <path d="M382 230 C382 214 428 214 428 230 L435 320 L375 320 Z" fill="#167D65" opacity="0.85" />
+          <!-- Braço acolhedor estendido -->
+          <path d="M395 240 L355 250" stroke="#FAD390" stroke-width="10" stroke-linecap="round" />
+        </g>
+
+        <!-- Broto / Planta germinando no centro (Símbolo de crescimento) -->
+        <g>
+          <path d="M260 340 L260 305" stroke="#167D65" stroke-width="4" stroke-linecap="round" />
+          <path d="M260 318 C248 312 248 300 260 300 C260 300 260 312 260 318 Z" fill="#167D65" />
+          <path d="M260 310 C272 304 272 292 260 292 C260 292 260 304 260 310 Z" fill="#167D65" />
+        </g>
+
+        <!-- Partículas de energia e empatia -->
+        <circle cx="160" cy="80" r="6" fill="#F59E0B" />
+        <circle cx="390" cy="110" r="5" fill="#167D65" />
+        <circle cx="330" cy="70" r="8" fill="#167D65" opacity="0.3" />
+        <circle cx="90" cy="140" r="5" fill="#167D65" opacity="0.4" />
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Seção Sobre o Projeto -->
+<section class="section section-about" id="sobre">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Sobre o Projeto</h2>
+      <p class="section-subtitle">{{ config.ORG_ABOUT }}</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h3 class="about-card-title">Impacto Comunitário</h3>
+        <p class="about-card-text">
+          Reunimos forças para atender demandas reais da comunidade, canalizando a dedicação de voluntários para ações concretas e transformadoras.
+        </p>
+      </div>
+
+      <div class="about-card">
+        <div class="about-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h3 class="about-card-title">Respeito ao seu Tempo</h3>
+        <p class="about-card-text">
+          Você escolhe sua disponibilidade (manhã, tarde, noite, fins de semana). Cada hora dedicada é valiosa e planejada com responsabilidade.
+        </p>
+      </div>
+
+      <div class="about-card">
+        <div class="about-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h3 class="about-card-title">Contato Direto e Humano</h3>
+        <p class="about-card-text">
+          Após a inscrição, a coordenação do projeto entra em contato via WhatsApp para apresentar as atividades e alinhar os próximos passos com você.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Seção Como Ajudar (Áreas de Interesse) -->
+<section class="section section-opportunities" id="como-ajudar">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Como Você Pode Ajudar</h2>
+      <p class="section-subtitle">
+        Conheça as principais áreas onde precisamos de apoio e escolha onde suas habilidades e entusiasmo fazem mais sentido.
+      </p>
+    </div>
+
+    <div class="opportunities-grid">
+      <!-- Card 1: Doações -->
+      <div class="opportunity-card" data-area-name="Arrecadação e organização de doações">
+        <div class="opportunity-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="21 8 21 21 3 21 3 8"></polyline>
+            <rect x="1" y="3" width="22" height="5"></rect>
+            <line x1="10" y1="12" x2="14" y2="12"></line>
+          </svg>
+        </div>
+        <h3 class="opportunity-title">Arrecadação e Doações</h3>
+        <p class="opportunity-desc">
+          Triagem, organização, separação de mantimentos, roupas e montagem de kits para famílias em vulnerabilidade.
+        </p>
+        <button type="button" class="btn btn-outline btn-sm btn-select-area" data-area="Arrecadação e organização de doações">
+          Quero ajudar nesta área &rarr;
+        </button>
+      </div>
+
+      <!-- Card 2: Eventos -->
+      <div class="opportunity-card" data-area-name="Apoio em eventos">
+        <div class="opportunity-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <h3 class="opportunity-title">Apoio em Eventos</h3>
+        <p class="opportunity-desc">
+          Recepção, credenciamento, apoio logístico e recreação durante feiras comunitárias, palestras e mutirões.
+        </p>
+        <button type="button" class="btn btn-outline btn-sm btn-select-area" data-area="Apoio em eventos">
+          Quero ajudar nesta área &rarr;
+        </button>
+      </div>
+
+      <!-- Card 3: Comunicação -->
+      <div class="opportunity-card" data-area-name="Comunicação e divulgação">
+        <div class="opportunity-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </div>
+        <h3 class="opportunity-title">Comunicação e Divulgação</h3>
+        <p class="opportunity-desc">
+          Criação de artes, fotografia, vídeos curtos e mobilização digital para ampliar o alcance dos projetos sociais.
+        </p>
+        <button type="button" class="btn btn-outline btn-sm btn-select-area" data-area="Comunicação e divulgação">
+          Quero ajudar nesta área &rarr;
+        </button>
+      </div>
+
+      <!-- Card 4: Administrativo -->
+      <div class="opportunity-card" data-area-name="Atividades administrativas">
+        <div class="opportunity-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <h3 class="opportunity-title">Atividades Administrativas</h3>
+        <p class="opportunity-desc">
+          Alimentação de planilhas, triagem de correspondências, atendimento ao público e suporte à organização interna.
+        </p>
+        <button type="button" class="btn btn-outline btn-sm btn-select-area" data-area="Atividades administrativas">
+          Quero ajudar nesta área &rarr;
+        </button>
+      </div>
+
+      <!-- Card 5: Outra área -->
+      <div class="opportunity-card" data-area-name="Outra área">
+        <div class="opportunity-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <h3 class="opportunity-title">Outras Habilidades</h3>
+        <p class="opportunity-desc">
+          Tem outra formação, profissão ou ideia que deseja compartilhar? Conte-nos no cadastro e pensaremos juntos na melhor forma.
+        </p>
+        <button type="button" class="btn btn-outline btn-sm btn-select-area" data-area="Outra área">
+          Quero ajudar nesta área &rarr;
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Seção Como Funciona -->
+<section class="section section-how-it-works" id="como-funciona">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Como Funciona a Participação</h2>
+      <p class="section-subtitle">Um caminho simples, transparente e sem burocracia para você começar a fazer a diferença.</p>
+    </div>
+
+    <div class="steps-flow">
+      <div class="step-flow-item">
+        <div class="step-flow-number">1</div>
+        <h3 class="step-flow-title">Preencha o cadastro</h3>
+        <p class="step-flow-desc">Informe seus dados básicos, áreas de interesse e dias/horários disponíveis no formulário abaixo.</p>
+      </div>
+
+      <div class="step-flow-arrow" aria-hidden="true">&rarr;</div>
+
+      <div class="step-flow-item">
+        <div class="step-flow-number">2</div>
+        <h3 class="step-flow-title">Receba o contato da equipe</h3>
+        <p class="step-flow-desc">Nossa coordenação recebe sua inscrição e entra em contato via WhatsApp para tirar dúvidas e apresentar as ações.</p>
+      </div>
+
+      <div class="step-flow-arrow" aria-hidden="true">&rarr;</div>
+
+      <div class="step-flow-item">
+        <div class="step-flow-number">3</div>
+        <h3 class="step-flow-title">Combine sua participação</h3>
+        <p class="step-flow-desc">Com a data e o local alinhados, você inicia sua atuação voluntária junto à nossa comunidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Seção do Formulário de Inscrição em Etapas -->
+<section class="section section-form" id="formulario-inscricao">
+  <div class="container form-wrapper">
+    <div class="form-intro">
+      <span class="badge-primary">Formulário Oficial</span>
+      <h2 class="form-title">Inscrição de Voluntário</h2>
+      <p class="form-subtitle">
+        Leva menos de dois minutos. Suas informações serão recebidas com sigilo pela equipe do projeto.
+      </p>
+    </div>
+
+    {% if errors and errors.get('geral') %}
+      <div class="alert alert-danger" role="alert">
+        {{ errors.geral }}
+      </div>
+    {% endif %}
+
+    <!-- Indicador Visual de Progresso das Etapas -->
+    <div class="step-progress-indicator" id="step-indicator" aria-label="Progresso do formulário">
+      <div class="step-item active" data-step="1">
+        <span class="step-bubble">1</span>
+        <span class="step-label">Sobre você</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item" data-step="2">
+        <span class="step-bubble">2</span>
+        <span class="step-label">Como quer ajudar</span>
+      </div>
+      <div class="step-connector"></div>
+      <div class="step-item" data-step="3">
+        <span class="step-bubble">3</span>
+        <span class="step-label">Revisar e enviar</span>
+      </div>
+    </div>
+
+    <!-- Formulário Principal -->
+    <form action="{{ url_for('cadastrar_voluntario') }}" method="POST" class="volunteer-form" id="volunteer-form" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <!-- ETAPA 1: Sobre você -->
+      <fieldset class="form-step active" id="step-1" data-step-index="1">
+        <legend class="step-legend">Etapa 1 de 3 — Seus Dados de Contato</legend>
+
+        <div class="form-group {% if errors and errors.get('nome') %}has-error{% endif %}">
+          <label for="input-nome" class="form-label">
+            Nome completo <span class="required-mark">*</span>
+          </label>
+          <input
+            type="text"
+            id="input-nome"
+            name="nome"
+            class="form-control"
+            placeholder="Ex: Maria Silva de Souza"
+            value="{{ form_data.get('nome', '') }}"
+            minlength="3"
+            maxlength="100"
+            required
+            autocomplete="name"
+          >
+          <span class="field-error" id="error-nome">
+            {% if errors and errors.get('nome') %}{{ errors.nome }}{% endif %}
+          </span>
+        </div>
+
+        <div class="form-group {% if errors and errors.get('telefone') %}has-error{% endif %}">
+          <label for="input-telefone" class="form-label">
+            WhatsApp / Telefone com DDD <span class="required-mark">*</span>
+          </label>
+          <input
+            type="tel"
+            id="input-telefone"
+            name="telefone"
+            class="form-control"
+            placeholder="(11) 98765-4321"
+            value="{{ form_data.get('telefone', '') }}"
+            required
+            autocomplete="tel"
+          >
+          <span class="field-hint">Aceita 10 ou 11 dígitos nacionais, com ou sem código do país (+55).</span>
+          <span class="field-error" id="error-telefone">
+            {% if errors and errors.get('telefone') %}{{ errors.telefone }}{% endif %}
+          </span>
+        </div>
+
+        <div class="form-group {% if errors and errors.get('email') %}has-error{% endif %}">
+          <label for="input-email" class="form-label">
+            E-mail <span class="required-mark">*</span>
+          </label>
+          <input
+            type="email"
+            id="input-email"
+            name="email"
+            class="form-control"
+            placeholder="seuemail@exemplo.com"
+            value="{{ form_data.get('email', '') }}"
+            maxlength="254"
+            required
+            autocomplete="email"
+          >
+          <span class="field-hint">Utilizado para você acessar sua Área do Voluntário e receber comunicados.</span>
+          <span class="field-error" id="error-email">
+            {% if errors and errors.get('email') %}{{ errors.email }}{% endif %}
+          </span>
+        </div>
+
+        <div class="form-group {% if errors and errors.get('senha') %}has-error{% endif %}">
+          <label for="input-senha" class="form-label">
+            Senha de acesso <span class="required-mark">*</span>
+          </label>
+          <input
+            type="password"
+            id="input-senha"
+            name="senha"
+            class="form-control"
+            placeholder="Mínimo de 6 caracteres"
+            minlength="6"
+            required
+            autocomplete="new-password"
+          >
+          <span class="field-hint">Mínimo de 6 caracteres. Usada para seu login seguro na Área do Voluntário.</span>
+          <span class="field-error" id="error-senha">
+            {% if errors and errors.get('senha') %}{{ errors.senha }}{% endif %}
+          </span>
+        </div>
+
+        <div class="form-group {% if errors and errors.get('confirmar_senha') %}has-error{% endif %}">
+          <label for="input-confirmar-senha" class="form-label">
+            Confirmar senha <span class="required-mark">*</span>
+          </label>
+          <input
+            type="password"
+            id="input-confirmar-senha"
+            name="confirmar_senha"
+            class="form-control"
+            placeholder="Digite a mesma senha novamente"
+            minlength="6"
+            required
+            autocomplete="new-password"
+          >
+          <span class="field-error" id="error-confirmar-senha">
+            {% if errors and errors.get('confirmar_senha') %}{{ errors.confirmar_senha }}{% endif %}
+          </span>
+        </div>
+
+        <div class="form-group {% if errors and errors.get('cidade') %}has-error{% endif %}">
+          <label for="input-cidade" class="form-label">
+            Cidade ou região <span class="required-mark">*</span>
+          </label>
+          <input
+            type="text"
+            id="input-cidade"
+            name="cidade"
+            class="form-control"
+            placeholder="Ex: Guará, Brasília ou São Paulo, SP"
+            value="{{ form_data.get('cidade', '') }}"
+            maxlength="100"
+            required
+          >
+          <span class="field-error" id="error-cidade">
+            {% if errors and errors.get('cidade') %}{{ errors.cidade }}{% endif %}
+          </span>
+        </div>
+
+        <div class="step-buttons">
+          <button type="button" class="btn btn-primary btn-step-next" data-next-step="2">
+            Continuar para Etapa 2 &rarr;
+          </button>
+        </div>
+      </fieldset>
+
+      <!-- ETAPA 2: Como quer ajudar -->
+      <fieldset class="form-step" id="step-2" data-step-index="2">
+        <legend class="step-legend">Etapa 2 de 3 — Interesse e Disponibilidade</legend>
+
+        <div class="form-group {% if errors and errors.get('area_interesse') %}has-error{% endif %}">
+          <label for="select-area" class="form-label">
+            Área de interesse principal <span class="required-mark">*</span>
+          </label>
+          <select id="select-area" name="area_interesse" class="form-control" required>
+            <option value="">Selecione uma área de atuação...</option>
+            {% for area in areas %}
+              <option value="{{ area }}" {% if form_data.get('area_interesse') == area %}selected{% endif %}>
+                {{ area }}
+              </option>
+            {% endfor %}
+          </select>
+          <span class="field-error" id="error-area">
+            {% if errors and errors.get('area_interesse') %}{{ errors.area_interesse }}{% endif %}
+          </span>
+        </div>
+
+        <div class="form-group {% if errors and errors.get('disponibilidade') %}has-error{% endif %}">
+          <label for="select-disponibilidade" class="form-label">
+            Sua disponibilidade de horário <span class="required-mark">*</span>
+          </label>
+          <select id="select-disponibilidade" name="disponibilidade" class="form-control" required>
+            <option value="">Selecione seu melhor período...</option>
+            {% for disp in disponibilidades %}
+              <option value="{{ disp }}" {% if form_data.get('disponibilidade') == disp %}selected{% endif %}>
+                {{ disp }}
+              </option>
+            {% endfor %}
+          </select>
+          <span class="field-error" id="error-disponibilidade">
+            {% if errors and errors.get('disponibilidade') %}{{ errors.disponibilidade }}{% endif %}
+          </span>
+        </div>
+
+        <div class="form-group {% if errors and errors.get('mensagem') %}has-error{% endif %}">
+          <label for="textarea-mensagem" class="form-label">
+            Mensagem, habilidades ou observações <span class="optional-mark">(opcional)</span>
+          </label>
+          <textarea
+            id="textarea-mensagem"
+            name="mensagem"
+            class="form-control"
+            rows="3"
+            maxlength="500"
+            placeholder="Conte-nos um pouco sobre suas experiências, motivações ou dúvidas..."
+          >{{ form_data.get('mensagem', '') }}</textarea>
+          <div class="char-count-wrapper">
+            <span class="char-counter" id="char-counter">0 / 500 caracteres</span>
+          </div>
+          <span class="field-error" id="error-mensagem">
+            {% if errors and errors.get('mensagem') %}{{ errors.mensagem }}{% endif %}
+          </span>
+        </div>
+
+        <div class="step-buttons">
+          <button type="button" class="btn btn-secondary btn-step-prev" data-prev-step="1">
+            &larr; Voltar
+          </button>
+          <button type="button" class="btn btn-primary btn-step-next" data-next-step="3">
+            Revisar e Continuar &rarr;
+          </button>
+        </div>
+      </fieldset>
+
+      <!-- ETAPA 3: Revisar e enviar -->
+      <fieldset class="form-step" id="step-3" data-step-index="3">
+        <legend class="step-legend">Etapa 3 de 3 — Confirmação e Envio</legend>
+
+        <div class="review-box">
+          <h3 class="review-title">Resumo dos seus dados</h3>
+          <dl class="review-list">
+            <div class="review-item">
+              <dt>Nome:</dt>
+              <dd id="review-nome">—</dd>
+            </div>
+            <div class="review-item">
+              <dt>WhatsApp / Telefone:</dt>
+              <dd id="review-telefone">—</dd>
+            </div>
+            <div class="review-item">
+              <dt>E-mail:</dt>
+              <dd id="review-email">—</dd>
+            </div>
+            <div class="review-item">
+              <dt>Cidade / Região:</dt>
+              <dd id="review-cidade">—</dd>
+            </div>
+            <div class="review-item">
+              <dt>Área de interesse:</dt>
+              <dd id="review-area">—</dd>
+            </div>
+            <div class="review-item">
+              <dt>Disponibilidade:</dt>
+              <dd id="review-disponibilidade">—</dd>
+            </div>
+            <div class="review-item">
+              <dt>Mensagem:</dt>
+              <dd id="review-mensagem">Não informada</dd>
+            </div>
+          </dl>
+          <div class="review-edit-action">
+            <button type="button" class="btn-link" id="btn-edit-step1">Editar dados de contato</button>
+            <span class="bullet-separator">•</span>
+            <button type="button" class="btn-link" id="btn-edit-step2">Editar interesse e horários</button>
+          </div>
+        </div>
+
+        <!-- Termo de Autorização Obrigatório -->
+        <div class="form-group checkbox-group {% if errors and errors.get('autorizacao_contato') %}has-error{% endif %}">
+          <label class="checkbox-label" for="check-autorizacao">
+            <input
+              type="checkbox"
+              id="check-autorizacao"
+              name="autorizacao_contato"
+              value="1"
+              required
+              {% if form_data.get('autorizacao_contato') %}checked{% endif %}
+            >
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">
+              Autorizo a organização a usar os dados deste formulário para entrar em contato comigo sobre oportunidades de voluntariado.
+            </span>
+          </label>
+          <span class="field-error" id="error-autorizacao">
+            {% if errors and errors.get('autorizacao_contato') %}{{ errors.autorizacao_contato }}{% endif %}
+          </span>
+        </div>
+
+        <div class="form-security-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="note-icon">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <p>
+            Não envie documentos ou informações sensíveis. Este cadastro registra seu interesse; a participação será combinada diretamente com a equipe.
+          </p>
+        </div>
+
+        <div class="step-buttons">
+          <button type="button" class="btn btn-secondary btn-step-prev" data-prev-step="2">
+            &larr; Voltar
+          </button>
+          <button type="submit" class="btn btn-primary btn-submit-form" id="btn-submit">
+            <span class="submit-spinner" aria-hidden="true"></span>
+            <span class="submit-text">Finalizar Inscrição</span>
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
+
+<!-- Seção Perguntas Frequentes (FAQ) em Acordeão -->
+<section class="section section-faq" id="faq">
+  <div class="container faq-container">
+    <div class="section-header">
+      <h2 class="section-title">Perguntas Frequentes</h2>
+      <p class="section-subtitle">Tire suas principais dúvidas sobre o processo de voluntariado e a atuação com nossa equipe.</p>
+    </div>
+
+    <div class="faq-accordion" id="faq-accordion">
+      <!-- Pergunta 1 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-ans-1">
+          <span class="faq-question-text">Como funciona o processo de inscrição?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="faq-ans-1" hidden>
+          <p>
+            Você preenche este formulário indicando suas informações básicas, cidade, disponibilidade e área de interesse. Assim que recebemos seus dados, nossa equipe interna faz a triagem das demandas ativas e organiza o cronograma de boas-vindas.
+          </p>
+        </div>
+      </div>
+
+      <!-- Pergunta 2 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-ans-2">
+          <span class="faq-question-text">Como a equipe entra em contato comigo?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="faq-ans-2" hidden>
+          <p>
+            O contato inicial é realizado preferencialmente por mensagem no WhatsApp ou ligação no número cadastrado. Um coordenador do projeto se apresentará para explicar as ações em andamento e conhecer melhor sua disponibilidade.
+          </p>
+        </div>
+      </div>
+
+      <!-- Pergunta 3 -->
+      <div class="faq-item">
+        <button class="faq-question" type="button" aria-expanded="false" aria-controls="faq-ans-3">
+          <span class="faq-question-text">Como a disponibilidade de horários é combinada?</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-answer" id="faq-ans-3" hidden>
+          <p>
+            Tudo é ajustado em diálogo direto. Compreendemos que cada pessoa possui rotinas e compromissos diferentes de estudo e trabalho. As escalas e encontros são planejados previamente para que sua participação seja leve, produtiva e acolhedora.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

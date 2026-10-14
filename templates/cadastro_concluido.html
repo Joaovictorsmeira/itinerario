@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastro Recebido — {{ config.ORG_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section section-success">
+  <div class="container success-container">
+    <div class="success-card">
+      <div class="success-icon-wrapper" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" class="success-icon">
+          <circle cx="32" cy="32" r="30" fill="#E8F5F1" stroke="#167D65" stroke-width="4" />
+          <path d="M20 32 L28 40 L44 24" stroke="#167D65" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <span class="badge-primary">Inscrição Registrada</span>
+      <h1 class="success-title">Cadastro recebido com sucesso!</h1>
+
+      <p class="success-lead">
+        Agradecemos pelo seu interesse e disposição em colaborar. A equipe da organização poderá entrar em contato para conhecer sua disponibilidade e combinar os próximos passos.
+      </p>
+
+      <div class="success-next-steps">
+        <h2 class="next-steps-heading">O que acontece agora?</h2>
+        <ul class="next-steps-list">
+          <li>
+            <span class="step-check">&check;</span>
+            <div>
+              <strong>Seus dados estão seguros:</strong> Suas informações foram gravadas com segurança no sistema interno da organização.
+            </div>
+          </li>
+          <li>
+            <span class="step-check">&check;</span>
+            <div>
+              <strong>Triagem de demandas:</strong> Nossa coordenação avalia as oportunidades ativas de acordo com a área de interesse escolhida.
+            </div>
+          </li>
+          <li>
+            <span class="step-check">&check;</span>
+            <div>
+              <strong>Linha do tempo ao vivo:</strong> Você já pode acompanhar em tempo real em qual etapa sua inscrição se encontra.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="success-actions">
+        <a href="{{ url_for('voluntario_area') }}" class="btn btn-primary btn-lg">Acessar Minha Área do Voluntário &rarr;</a>
+        <a href="{{ url_for('index') }}" class="btn btn-outline btn-lg">Voltar à página inicial</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

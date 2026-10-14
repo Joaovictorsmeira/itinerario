@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: conecta-voluntarios
+    env: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt && python app.py --setup
+    startCommand: gunicorn app:app --workers 2 --bind 0.0.0.0:$PORT
+    autoDeploy: true
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        value: https://oqwnohnvurmfnensnwlo.supabase.co
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASSWORD
+        sync: false

@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block title %}Painel de Gestão — {{ config.ORG_NAME }}{% endblock %}
+
+{% block content %}
+<div class="admin-layout container">
+  <!-- Barra Superior do Painel Administrativo -->
+  <div class="admin-topbar">
+    <div class="topbar-left">
+      <span class="badge-primary">Área da Organização</span>
+      <h1 class="admin-page-title">Visão Geral dos Voluntários</h1>
+    </div>
+    <div class="topbar-right">
+      <span class="admin-user-tag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="tag-icon">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        {{ current_admin }}
+      </span>
+      <a href="{{ url_for('index') }}" class="btn btn-outline btn-sm">Ver site</a>
+      <form action="{{ url_for('admin_logout') }}" method="POST" class="inline-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-secondary btn-sm">Sair</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Cartões de Indicadores Calculados do Banco -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-icon metric-icon-total">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+      </div>
+      <div class="metric-data">
+        <span class="metric-label">Total de Inscritos</span>
+        <strong class="metric-value">{{ total_inscritos }}</strong>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-icon metric-icon-new">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <div class="metric-data">
+        <span class="metric-label">Cadastros Novos</span>
+        <strong class="metric-value">{{ cadastros_novos }}</strong>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-icon metric-icon-active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <div class="metric-data">
+        <span class="metric-label">Voluntários Ativos</span>
+        <strong class="metric-value">{{ voluntarios_ativos }}</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barra de Busca e Filtros -->
+  <div class="admin-filter-bar">
+    <form action="{{ url_for('admin_painel') }}" method="GET" class="filter-form">
+      <div class="search-input-group">
+        <label for="search-query" class="visually-hidden">Buscar por nome, telefone ou cidade</label>
+        <div class="input-with-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            id="search-query"
+            name="q"
+            class="form-control"
+            placeholder="Buscar por nome, telefone ou cidade..."
+            value="{{ q }}"
+          >
+        </div>
+      </div>
+
+      <div class="filter-status-group">
+        <label for="filter-status" class="filter-label">Status:</label>
+        <select id="filter-status" name="status" class="form-control" onchange="this.form.submit()">
+          <option value="todos" {% if status_filtro == 'todos' %}selected{% endif %}>Todos os status</option>
+          <option value="recebido" {% if status_filtro == 'recebido' %}selected{% endif %}>Recebido</option>
+          <option value="em_analise" {% if status_filtro == 'em_analise' %}selected{% endif %}>Em Análise</option>
+          <option value="contato_realizado" {% if status_filtro == 'contato_realizado' %}selected{% endif %}>Contato Realizado</option>
+          <option value="participacao_confirmada" {% if status_filtro == 'participacao_confirmada' %}selected{% endif %}>Participação Confirmada</option>
+          <option value="encerrado" {% if status_filtro == 'encerrado' %}selected{% endif %}>Encerrado</option>
+        </select>
+      </div>
+
+      <div class="filter-actions">
+        <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
+        {% if q or (status_filtro and status_filtro != 'todos') %}
+          <a href="{{ url_for('admin_painel') }}" class="btn btn-outline btn-sm">Limpar filtros</a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+
+  <!-- Resumo de Contagem -->
+  <div class="results-header">
+    <span class="results-count">
+      Exibindo <strong>{{ total_filtrados }}</strong> {% if total_filtrados == 1 %}cadastro{% else %}cadastros{% endif %}
+    </span>
+  </div>
+
+  <!-- Lista de Cadastros -->
+  {% if voluntarios %}
+    <div class="table-card">
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Área de Interesse</th>
+              <th scope="col">Disponibilidade</th>
+              <th scope="col">Data Inscrição</th>
+              <th scope="col">Status</th>
+              <th scope="col" class="text-right">Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for v in voluntarios %}
+              <tr>
+                <td class="cell-name">
+                  <div class="volunteer-name-block">
+                    <strong>{{ v.nome }}</strong>
+                    <span class="volunteer-location">{{ v.cidade }}</span>
+                  </div>
+                </td>
+                <td class="cell-area">
+                  <span class="text-truncate">{{ v.area_interesse }}</span>
+                </td>
+                <td class="cell-availability">
+                  {{ v.disponibilidade }}
+                </td>
+                <td class="cell-date">
+                  {{ format_datetime_br(v.criado_em) }}
+                </td>
+                <td class="cell-status">
+                  <span class="status-badge status-{{ v.status }}">
+                    {{ config.STATUS_LABELS.get(v.status, v.status | capitalize) }}
+                  </span>
+                </td>
+                <td class="cell-actions text-right">
+                  <a href="{{ url_for('admin_detalhes', id=v.id) }}" class="btn btn-sm btn-outline">
+                    Ver detalhes
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  {% else %}
+    <!-- Estados Vazios (Empty States) -->
+    <div class="empty-state-card">
+      <div class="empty-icon-box" aria-hidden="true">
+        {% if q or (status_filtro and status_filtro != 'todos') %}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        {% else %}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+          </svg>
+        {% endif %}
+      </div>
+
+      {% if q or (status_filtro and status_filtro != 'todos') %}
+        <h2 class="empty-state-title">Nenhum cadastro encontrado para estes filtros</h2>
+        <p class="empty-state-desc">Tente alterar os termos da busca ou selecionar outro status.</p>
+        <div class="empty-state-action">
+          <a href="{{ url_for('admin_painel') }}" class="btn btn-primary">Limpar filtros</a>
+        </div>
+      {% else %}
+        <h2 class="empty-state-title">Ainda não há cadastros</h2>
+        <p class="empty-state-desc">Quando novos voluntários preencherem o formulário no portal público, suas inscrições aparecerão listadas aqui automaticamente.</p>
+        <div class="empty-state-action">
+          <a href="{{ url_for('index') }}#formulario-inscricao" class="btn btn-outline" target="_blank">Acessar formulário público</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

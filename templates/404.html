@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo or "Página Não Encontrada" }} — {{ config.ORG_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section section-error">
+  <div class="container error-container">
+    <div class="error-card">
+      <div class="error-code-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="error-icon">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+
+      <h1 class="error-title">{{ titulo or "Página Não Encontrada" }}</h1>
+      <p class="error-message">
+        {{ mensagem or "O conteúdo que você tentou acessar não existe ou não está mais disponível." }}
+      </p>
+
+      <div class="error-actions">
+        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">Voltar à página inicial</a>
+        {% if current_admin %}
+          <a href="{{ url_for('admin_painel') }}" class="btn btn-outline btn-lg">Ir para o Painel</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

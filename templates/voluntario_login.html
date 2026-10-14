@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Área do Voluntário — Login com E-mail e Senha — {{ config.ORG_NAME }}{% endblock %}
+
+{% block content %}
+<section class="section section-login">
+  <div class="container login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-badge-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <polyline points="17 11 19 13 23 9"></polyline>
+          </svg>
+        </div>
+        <h1 class="login-title">Área do Voluntário</h1>
+        <p class="login-subtitle">Acesso seguro com seu e-mail e senha cadastrados.</p>
+      </div>
+
+      <form action="{{ url_for('voluntario_login') }}" method="POST" class="login-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="form-group">
+          <label for="login-email" class="form-label">E-mail Cadastrado</label>
+          <input
+            type="email"
+            id="login-email"
+            name="email"
+            class="form-control"
+            placeholder="seuemail@exemplo.com"
+            required
+            autocomplete="email"
+            autofocus
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="login-senha" class="form-label">Senha</label>
+          <input
+            type="password"
+            id="login-senha"
+            name="senha"
+            class="form-control"
+            placeholder="Digite sua senha..."
+            required
+            autocomplete="current-password"
+          >
+        </div>
+
+        <div class="login-actions">
+          <button type="submit" class="btn btn-primary btn-block">Entrar na Minha Área</button>
+        </div>
+      </form>
+
+      <div class="login-footer">
+        <p class="footer-hint">Ainda não possui conta? <a href="{{ url_for('index') }}#formulario-inscricao">Cadastre-se como voluntário</a>.</p>
+        <a href="{{ url_for('index') }}" class="btn-link">&larr; Voltar para a página pública</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

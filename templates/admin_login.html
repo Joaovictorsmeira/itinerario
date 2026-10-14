@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Área da Organização — Login Administrativo{% endblock %}
+
+{% block content %}
+<section class="section section-login">
+  <div class="container login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-badge-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <h1 class="login-title">Área da Organização</h1>
+        <p class="login-subtitle">Acesso restrito para consulta e acompanhamento de voluntários.</p>
+      </div>
+
+      <form action="{{ url_for('admin_login', next=request.args.get('next')) }}" method="POST" class="login-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="form-group">
+          <label for="input-usuario" class="form-label">Usuário</label>
+          <input
+            type="text"
+            id="input-usuario"
+            name="usuario"
+            class="form-control"
+            placeholder="Digite seu usuário..."
+            required
+            autocomplete="username"
+            autofocus
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="input-senha" class="form-label">Senha</label>
+          <input
+            type="password"
+            id="input-senha"
+            name="senha"
+            class="form-control"
+            placeholder="Digite sua senha..."
+            required
+            autocomplete="current-password"
+          >
+        </div>
+
+        <div class="login-actions">
+          <button type="submit" class="btn btn-primary btn-block">Entrar no Painel</button>
+        </div>
+      </form>
+
+      <div class="login-footer">
+        <a href="{{ url_for('index') }}" class="btn-link">&larr; Voltar para a página pública</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

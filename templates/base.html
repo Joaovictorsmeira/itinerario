@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+  <script>document.documentElement.classList.remove('no-js');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conecta Voluntários — Portal do projeto de extensão universitária para conectar voluntários a ações sociais comunitárias.">
+  <title>{% block title %}{{ config.ORG_NAME }} — {{ config.ORG_TAGLINE }}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Cabeçalho Principal -->
+  <header class="site-header" id="site-header">
+    <div class="header-container container">
+      <a href="{{ url_for('index') }}" class="brand-logo" aria-label="Página inicial do {{ config.ORG_NAME }}">
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4C13.2 4 11 6.2 11 9C11 11.8 13.2 14 16 14C18.8 14 21 11.8 21 9C21 6.2 18.8 4 16 4Z" fill="currentColor"/>
+            <path d="M6 18C4.3 18 3 19.3 3 21C3 22.7 4.3 24 6 24C7.7 24 9 22.7 9 21C9 19.3 7.7 18 6 18Z" fill="currentColor"/>
+            <path d="M26 18C24.3 18 23 19.3 23 21C23 22.7 24.3 24 26 24C27.7 24 29 22.7 29 21C29 19.3 27.7 18 26 18Z" fill="currentColor"/>
+            <path d="M16 16C11.6 16 8 19.6 8 24V28H24V24C24 19.6 20.4 16 16 16Z" fill="currentColor"/>
+            <path d="M6 25C4 25 2 26.5 2 28.5V30H8V27.5C8 26.1 7.2 25 6 25Z" fill="currentColor" opacity="0.7"/>
+            <path d="M26 25C28 25 30 26.5 30 28.5V30H24V27.5C24 26.1 24.8 25 26 25Z" fill="currentColor" opacity="0.7"/>
+          </svg>
+        </div>
+        <span class="brand-text">{{ config.ORG_NAME }}</span>
+      </a>
+
+      <!-- Botão Menu Mobile -->
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Abrir menu de navegação">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+
+      <!-- Navegação Primária -->
+      <nav class="primary-nav" id="primary-nav">
+        <ul class="nav-list">
+          <li><a href="{{ url_for('index') }}#sobre" class="nav-link">Sobre</a></li>
+          <li><a href="{{ url_for('index') }}#como-ajudar" class="nav-link">Como ajudar</a></li>
+          <li><a href="{{ url_for('index') }}#faq" class="nav-link">Dúvidas</a></li>
+          
+          {% if current_voluntario %}
+            <li><a href="{{ url_for('voluntario_area') }}" class="nav-link nav-link-voluntario">Minha Área ({{ current_voluntario.split()[0] }})</a></li>
+          {% else %}
+            <li><a href="{{ url_for('voluntario_login') }}" class="nav-link">Acompanhar Inscrição</a></li>
+          {% endif %}
+
+          <li><a href="{{ url_for('index') }}#formulario-inscricao" class="btn btn-primary btn-sm">Quero ser voluntário</a></li>
+
+          {% if current_admin %}
+            <li><a href="{{ url_for('admin_painel') }}" class="nav-link nav-link-admin">Painel Admin</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mensagens Flash -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages-container container">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}" role="alert">
+            <span class="alert-text">{{ message }}</span>
+            <button type="button" class="alert-close" aria-label="Fechar mensagem">&times;</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Conteúdo Principal -->
+  <main id="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Rodapé Institucional -->
+  <footer class="site-footer">
+    <div class="footer-container container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <div class="footer-brand">
+            <span class="brand-text">{{ config.ORG_NAME }}</span>
+          </div>
+          <p class="footer-description">{{ config.ORG_SUBTITLE }}</p>
+          <span class="footer-badge">{{ config.ORG_FOOTER_NOTE }}</span>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h3 class="footer-heading">Navegação</h3>
+          <ul class="footer-nav-list">
+            <li><a href="{{ url_for('index') }}#sobre">Sobre o projeto</a></li>
+            <li><a href="{{ url_for('index') }}#como-ajudar">Áreas de voluntariado</a></li>
+            <li><a href="{{ url_for('index') }}#como-funciona">Como funciona</a></li>
+            <li><a href="{{ url_for('index') }}#formulario-inscricao">Inscrição</a></li>
+            <li><a href="{{ url_for('voluntario_area') }}">Área do Voluntário</a></li>
+            <li><a href="{{ url_for('index') }}#faq">Perguntas frequentes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-contact">
+          <h3 class="footer-heading">Contato</h3>
+          {% if config.ORG_EMAIL %}
+            <p class="contact-item">
+              <span class="contact-label">E-mail:</span>
+              <a href="mailto:{{ config.ORG_EMAIL }}">{{ config.ORG_EMAIL }}</a>
+            </p>
+          {% endif %}
+          {% if config.ORG_PHONE %}
+            <p class="contact-item">
+              <span class="contact-label">Telefone:</span>
+              <span>{{ config.ORG_PHONE }}</span>
+            </p>
+          {% endif %}
+          <div class="footer-admin-link">
+            {% if current_admin %}
+              <a href="{{ url_for('admin_painel') }}">Acessar Painel da Organização ({{ current_admin }})</a>
+            {% else %}
+              <a href="{{ url_for('admin_login') }}">Área da organização</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; {{ current_year }} {{ config.ORG_NAME }}. Todos os direitos reservados.</p>
+        <p class="footer-subtext">{{ config.ORG_FOOTER_NOTE }}</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
